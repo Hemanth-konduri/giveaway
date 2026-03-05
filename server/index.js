@@ -1,19 +1,30 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
+
+
+
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: 'https://giveaway-mocha-rho.vercel.app',
-  credentials: true
-}));
+// app.use(cors({
+//   origin: [
+//     'https://giveaway-mocha-rho.vercel.app',
+//     'http://localhost:5173',  // React dev server
+//   ],
+//   credentials: true
+// }));
+
+app.use(cors());
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('GiveWave API is running ✅');
 });
+
+app.use('/api/auth', authRoutes);
 
 if (process.env.DATABASE_URL) {
   const pool = require('./config/db');
