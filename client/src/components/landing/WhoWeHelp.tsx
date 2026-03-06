@@ -1,10 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-import { useState } from 'react'
-
 const WhoWeHelp = () => {
-  const [muted, setMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: false, margin: '-100px' })
@@ -17,12 +14,6 @@ const WhoWeHelp = () => {
       videoRef.current.pause()
     }
   }, [isInView])
-
-  const toggleMute = () => {
-    if (!videoRef.current) return
-    videoRef.current.muted = !muted
-    setMuted(!muted)
-  }
 
   return (
     <section id="who-we-help" className="py-24 px-6 bg-white dark:bg-gray-950 relative overflow-hidden">

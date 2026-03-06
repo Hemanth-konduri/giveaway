@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowRight, Heart, Users, Target } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
@@ -45,17 +45,13 @@ const campaigns = [
 
 const Hero = () => {
   const [current, setCurrent] = useState(0)
-  const [direction, setDirection] = useState(1)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setDirection(1)
       setCurrent((prev) => (prev + 1) % campaigns.length)
     }, 3000)
     return () => clearInterval(timer)
   }, [])
-
-  const progressPercent = (campaigns[current].raised / campaigns[current].goal) * 100
 
   return (
     <section className="min-h-screen flex items-center pt-20 pb-16 px-6 bg-white dark:bg-gray-950 relative overflow-hidden">
@@ -263,6 +259,7 @@ const Hero = () => {
 
 </div>
 
+      </div>
       </div>
     </section>
   )
