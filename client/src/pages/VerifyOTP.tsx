@@ -9,7 +9,6 @@ const VerifyOTP = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [resending, setResending] = useState(false)
   const [countdown, setCountdown] = useState(60)
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const navigate = useNavigate()
@@ -125,7 +124,9 @@ const VerifyOTP = () => {
             {otp.map((digit, i) => (
               <input
                 key={i}
-                ref={(el) => (inputRefs.current[i] = el)}
+                ref={(el) => {
+                  inputRefs.current[i] = el
+                }}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
@@ -159,7 +160,6 @@ const VerifyOTP = () => {
             ) : (
               <button
                 onClick={() => setCountdown(60)}
-                disabled={resending}
                 className="text-emerald-500 font-semibold hover:underline"
               >
                 Resend OTP
