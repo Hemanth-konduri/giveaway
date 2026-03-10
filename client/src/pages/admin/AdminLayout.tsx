@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -15,9 +15,11 @@ import {
   Search,
   Settings,
   ShoppingBag,
+  Shield,
   Sparkles,
   Sun,
   Tag,
+  User,
   Users,
   X,
 } from 'lucide-react'
@@ -61,18 +63,30 @@ const menuGroups = [
 const AdminLayout = ({ children, darkMode, toggleDarkMode }: AdminLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
+  const [showUserDropdown, setShowUserDropdown] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
   const initials = useMemo(() => user?.full_name?.charAt(0)?.toUpperCase() ?? 'A', [user?.full_name])
 
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('#user-dropdown-btn')) {
+        setShowUserDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
   const handleLogout = () => {
     logout()
     navigate('/login')
   }
 
-  const SidebarContent = () => (
+  const SidebarContent = useMemo(() => (
     <div className="flex h-full min-h-0 flex-col">
       <div className="flex items-center gap-3 border-b border-border/70 p-4">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
@@ -175,7 +189,7 @@ const AdminLayout = ({ children, darkMode, toggleDarkMode }: AdminLayoutProps) =
         </button>
       </div>
     </div>
-  )
+  ), [sidebarOpen, location.pathname, setMobileSidebarOpen, handleLogout])
 
   return (
     <div className={`admin-theme ${darkMode ? 'dark' : ''} h-screen overflow-hidden bg-muted/60 p-3`}>
@@ -185,7 +199,7 @@ const AdminLayout = ({ children, darkMode, toggleDarkMode }: AdminLayoutProps) =
           transition={{ duration: 0.25, ease: 'easeInOut' }}
           className="hidden h-full shrink-0 border-r border-border/70 bg-card lg:flex"
         >
-          <SidebarContent />
+          {SidebarContent}
         </motion.aside>
 
         <AnimatePresence>
@@ -205,7 +219,7 @@ const AdminLayout = ({ children, darkMode, toggleDarkMode }: AdminLayoutProps) =
                 transition={{ duration: 0.25 }}
                 className="fixed left-0 top-0 z-50 h-screen w-[260px] border-r border-border/70 bg-card lg:hidden"
               >
-                <SidebarContent />
+                {SidebarContent}
               </motion.aside>
             </>
           )}
@@ -249,16 +263,85 @@ const AdminLayout = ({ children, darkMode, toggleDarkMode }: AdminLayoutProps) =
                   {darkMode ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
                 </button>
 
-                <button className="flex items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-xs font-bold text-secondary-foreground">
-                    {initials}
-                  </span>
-                  <div className="text-left leading-tight">
-                    <p className="text-xs font-semibold text-foreground">{user?.full_name ?? 'Admin'}</p>
-                    <p className="text-[11px] text-muted-foreground capitalize">{user?.role ?? 'admin'}</p>
-                  </div>
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                </button>
+                <div className="relative">
+                  <button
+                    id="user-dropdown-btn"
+                    onClick={() => setShowUserDropdown(prev => !prev)}
+                    className="flex items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5 hover:bg-muted transition"
+                  >
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-xs font-bold text-secondary-foreground">
+                      {initials}
+                    </span>
+                    <div className="text-left leading-tight">
+                      <p className="text-xs font-semibold text-foreground">{user?.full_name ?? 'Admin'}</p>
+                      <p className="text-[11px] text-muted-foreground capitalize">{user?.role ?? 'admin'}</p>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: showUserDropdown ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                    </motion.div>
+                  </button>
+
+                  <AnimatePresence>
+                    {showUserDropdown && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute right-0 top-12 w-64 rounded-2xl border border-border/70 bg-card shadow-xl z-50 overflow-hidden"
+                      >
+                        {/* Profile Header */}
+                        <div className="p-4 border-b border-border/70 bg-muted/30">
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground text-lg font-bold">
+                              {initials}
+                            </div>
+                            <div>
+                              <p className="font-semibold text-foreground text-sm">{user?.full_name ?? 'Admin'}</p>
+                              <p className="text-xs text-muted-foreground">{user?.email ?? ''}</p>
+                              <span className="inline-flex items-center gap-1 mt-1 bg-secondary/15 text-secondary text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize">
+                                <Shield className="w-2.5 h-2.5" />
+                                {user?.role ?? 'admin'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Menu Items */}
+                        <div className="p-2">
+                          {[
+                            { icon: User, label: 'My Profile', action: () => navigate('/admin/settings') },
+                            { icon: Settings, label: 'Settings', action: () => navigate('/admin/settings') },
+                            { icon: Bell, label: 'Notifications', action: () => {} },
+                          ].map(({ icon: Icon, label, action }) => (
+                            <button
+                              key={label}
+                              onClick={() => { action(); setShowUserDropdown(false) }}
+                              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-foreground hover:bg-muted transition text-left"
+                            >
+                              <Icon className="w-4 h-4 text-muted-foreground" />
+                              {label}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Logout */}
+                        <div className="p-2 pt-0 border-t border-border/70">
+                          <button
+                            onClick={() => { handleLogout(); setShowUserDropdown(false) }}
+                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-destructive hover:bg-destructive/10 transition text-left"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Log out
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
           </header>

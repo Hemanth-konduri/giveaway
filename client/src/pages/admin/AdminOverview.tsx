@@ -320,7 +320,7 @@ const AdminOverview = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[820px] text-sm">
+          <table className="w-full min-w-205 text-sm">
             <thead>
               <tr className="border-b border-border/70 text-left text-muted-foreground">
                 <th className="pb-3 font-medium">Order Id</th>
