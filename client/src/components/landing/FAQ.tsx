@@ -46,9 +46,9 @@ const FAQItem = ({ faq, index }: { faq: typeof faqs[0], index: number }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.07 }}
-      className={`border rounded-2xl overflow-hidden transition-colors duration-300 ${
+      className={`border rounded-lg overflow-hidden transition-colors duration-300 ${
         open
-          ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/30'
+          ? 'border-primary/30 dark:border-primary/40 bg-primary/5 dark:bg-primary/10'
           : 'border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900'
       }`}
     >
@@ -58,14 +58,14 @@ const FAQItem = ({ faq, index }: { faq: typeof faqs[0], index: number }) => {
       >
         <span className={`font-semibold text-base pr-8 ${
           open
-            ? 'text-emerald-600 dark:text-emerald-400'
+            ? 'text-primary dark:text-primary'
             : 'text-gray-900 dark:text-white'
         }`}>
           {faq.question}
         </span>
-        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+        <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
           open
-            ? 'bg-emerald-500 text-white'
+            ? 'bg-primary text-white'
             : 'bg-gray-100 dark:bg-gray-800 text-gray-500'
         }`}>
           {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -95,8 +95,8 @@ const FAQ = () => {
     <section id="faq" className="py-24 px-6 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
       {/* Background design - Gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-100 dark:bg-emerald-900/20 rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-10 right-20 w-96 h-96 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl opacity-25" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 dark:bg-primary/10 rounded-lg blur-3xl opacity-30" />
+        <div className="absolute bottom-10 right-20 w-96 h-96 bg-accent/20 dark:bg-accent/10 rounded-lg blur-3xl opacity-25" />
       </div>
       <div className="relative z-10">
       <div className="max-w-4xl mx-auto">
@@ -107,7 +107,7 @@ const FAQ = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-emerald-500 font-semibold text-sm uppercase tracking-widest"
+            className="text-primary font-semibold text-sm uppercase tracking-widest"
           >
             FAQ
           </motion.span>
@@ -119,7 +119,7 @@ const FAQ = () => {
             className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-3 mb-4"
           >
             Questions we
-            <span className="text-emerald-500"> always get</span>
+            <span className="text-primary"> always get</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -145,7 +145,7 @@ const FAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="text-center mt-16 p-8 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700"
+          className="text-center mt-16 p-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700"
         >
           <p className="text-gray-900 dark:text-white font-bold text-xl mb-2">
             Still have questions?
@@ -155,7 +155,7 @@ const FAQ = () => {
           </p>
           <a
             href="mailto:support@givewave.in"
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-full transition-all"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg transition-all"
           >
             Contact Support →
           </a>

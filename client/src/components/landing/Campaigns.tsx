@@ -79,56 +79,70 @@ const row2 = [
 
 const Card = ({ item }: { item: typeof row1[0] }) => (
   <motion.div
-    whileHover={{ scale: 1.03, zIndex: 10 }}
+    whileHover={{ scale: 1.04 }}
     transition={{ duration: 0.3 }}
-    className="relative w-72 h-80 rounded-2xl overflow-hidden flex-shrink-0 cursor-pointer group"
+    className="relative w-72 h-80 rounded-xl overflow-hidden flex-shrink-0 cursor-pointer group"
   >
+    {/* Image */}
     <img
       src={item.image}
       alt={item.title}
-      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
     />
 
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+    {/* Default gradient */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
     {/* Category badge */}
-    <div className="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full">
+    <div className="absolute top-4 left-4 bg-white/20 backdrop-blur text-white text-xs font-semibold px-3 py-1 rounded-full">
       {item.category}
     </div>
 
-    {/* Content */}
-    <div className="absolute bottom-0 left-0 right-0 p-5">
-      <h3 className="text-white font-bold text-sm leading-snug mb-2">
+    {/* Title (visible by default) */}
+    <div className="absolute bottom-4 left-4 right-4 transition-all duration-300 group-hover:opacity-0">
+      <h3 className="text-white font-semibold text-sm leading-snug">
         {item.title}
       </h3>
-      <div className="flex items-center gap-1 text-white/60 text-xs mb-3">
+    </div>
+
+    {/* Hover overlay */}
+    <div className="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
+
+      <h3 className="text-white font-semibold text-sm mb-2">
+        {item.title}
+      </h3>
+
+      <div className="flex items-center gap-1 text-white/70 text-xs mb-3">
         <MapPin className="w-3 h-3" />
         {item.location}
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-white/20 rounded-full h-1 mb-1">
+      <div className="w-full bg-white/20 rounded-full h-1 mb-2">
         <div
-          className="bg-emerald-400 h-1 rounded-full"
+          className="bg-primary h-1 rounded-full"
           style={{ width: `${item.raised}%` }}
         />
       </div>
-      <div className="flex justify-between text-white/60 text-xs">
+
+      <div className="flex justify-between text-xs text-white/70">
         <span>{item.raised}% funded</span>
-        <span className="text-emerald-400 font-semibold">Donate →</span>
+        <span className="text-primary font-semibold">Donate →</span>
       </div>
+
     </div>
   </motion.div>
 )
 
-const MarqueeRow = ({
-  items,
-  direction,
-}: {
-  items: typeof row1
-  direction: 'left' | 'right'
-}) => {
+const MarqueeRow = (
+  {
+    items,
+    direction,
+  }: {
+    items: typeof row1
+    direction: 'left' | 'right'
+  }
+) => {
   const doubled = [...items, ...items]
   const animate = direction === 'left'
     ? { x: [0, -items.length * 304] }
@@ -156,13 +170,13 @@ const MarqueeRow = ({
 
 const Campaigns = () => {
   return (
-    <section id="campaigns" className="py-24 bg-gray-50 dark:bg-gray-900 overflow-hidden relative">
+    <section id="campaigns" className="py-24 bg-gray-50 overflow-hidden relative">
       {/* Background design - Wavy lines */}
       <div className="absolute inset-0 pointer-events-none opacity-25">
         <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 600">
           <defs>
             <pattern id="waves" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-              <path d="M0,100 Q50,50 100,100 T200,100" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-300 dark:text-emerald-700" />
+              <path d="M0,100 Q50,50 100,100 T200,100" fill="none" stroke="rgb(239, 68, 68)" strokeWidth="2" opacity="0.3" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#waves)" />
@@ -176,7 +190,7 @@ const Campaigns = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-emerald-500 font-semibold text-sm uppercase tracking-widest"
+              className="text-primary font-semibold text-sm uppercase tracking-widest"
             >
               Live Campaigns
             </motion.span>
@@ -185,10 +199,10 @@ const Campaigns = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-2"
+              className="text-4xl lg:text-5xl font-bold text-gray-900 mt-2"
             >
               Problems waiting <br />
-              <span className="text-emerald-500">for your help</span>
+              <span className="text-primary">for your help</span>
             </motion.h2>
           </div>
           <motion.a
@@ -196,7 +210,7 @@ const Campaigns = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             href="/campaigns"
-            className="text-emerald-500 font-semibold hover:underline text-sm self-end"
+            className="text-primary font-semibold hover:underline text-sm self-end"
           >
             View all campaigns →
           </motion.a>

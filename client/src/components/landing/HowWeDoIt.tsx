@@ -33,13 +33,13 @@ const steps = [
 
 const HowWeDoIt = () => {
   return (
-    <section id="how-we-do-it" className="py-24 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+    <section id="how-we-do-it" className="py-24 bg-gray-50 relative overflow-hidden">
       {/* Background design - Grid pattern */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
         <svg className="w-full h-full" preserveAspectRatio="none">
           <defs>
             <pattern id="grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-emerald-300 dark:text-emerald-700" />
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgb(239, 68, 68)" strokeWidth="1" opacity="0.3" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -54,7 +54,7 @@ const HowWeDoIt = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-emerald-500 font-semibold text-sm uppercase tracking-widest"
+            className="text-primary font-semibold text-sm uppercase tracking-widest"
           >
             How We Do It
           </motion.span>
@@ -63,10 +63,10 @@ const HowWeDoIt = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-3"
+            className="text-4xl lg:text-5xl font-bold text-gray-900 mt-3"
           >
             Four steps to change
-            <span className="text-emerald-500"> someone's life</span>
+            <span className="text-primary"> someone's life</span>
           </motion.h2>
         </div>
 
@@ -88,7 +88,7 @@ const HowWeDoIt = () => {
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
-                  className="rounded-3xl overflow-hidden aspect-video shadow-2xl"
+                  className="rounded-lg overflow-hidden aspect-video shadow-2xl"
                 >
                   <img
                     src={step.image}
@@ -98,25 +98,25 @@ const HowWeDoIt = () => {
                 </motion.div>
 
                 {/* Tag badge */}
-                <div className="absolute -bottom-4 -right-4 bg-emerald-500 text-white text-sm font-bold px-5 py-2.5 rounded-full shadow-lg">
+                <div className="absolute -bottom-4 -right-4 bg-primary text-white text-sm font-bold px-5 py-2.5 rounded-lg shadow-lg">
                   {step.tag}
                 </div>
               </div>
 
               {/* Text */}
               <div className="flex flex-col gap-6">
-                <span className="text-8xl font-black text-gray-100 dark:text-gray-800 leading-none select-none">
+                <span className="text-8xl font-black text-gray-100 leading-none select-none">
                   {step.number}
                 </span>
-                <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white -mt-6">
+                <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 -mt-6">
                   {step.title}
                 </h3>
-                <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed">
+                <p className="text-gray-500 text-lg leading-relaxed">
                   {step.description}
                 </p>
 
                 {/* Divider */}
-                <div className="w-16 h-1 bg-emerald-500 rounded-full" />
+                <div className="w-16 h-1 bg-primary rounded-full" />
               </div>
             </motion.div>
           ))}
@@ -130,19 +130,19 @@ const HowWeDoIt = () => {
           transition={{ delay: 0.3 }}
           className="text-center mt-32"
         >
-          <p className="text-gray-500 dark:text-gray-400 mb-6 text-lg">
+          <p className="text-gray-500 mb-6 text-lg">
             Ready to make a difference?
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
               href="/register"
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-full transition-all hover:shadow-lg hover:shadow-emerald-200 dark:hover:shadow-emerald-900"
+              className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg transition-all hover:shadow-lg hover:shadow-primary/20"
             >
               Post a Problem →
             </a>
             <a
               href="/campaigns"
-              className="border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold px-8 py-4 rounded-full hover:border-emerald-500 hover:text-emerald-500 transition-all"
+              className="border border-gray-200 text-gray-700 font-semibold px-8 py-4 rounded-full hover:border-emerald-500 hover:text-emerald-500 transition-all"
             >
               Browse Campaigns
             </a>

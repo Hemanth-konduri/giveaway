@@ -46,7 +46,7 @@ const Volunteers = () => {
         <svg className="w-full h-full" preserveAspectRatio="none">
           <defs>
             <pattern id="hexagons" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M40,0 L80,23 L80,69 L40,92 L0,69 L0,23 Z" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-emerald-300 dark:text-emerald-700" />
+              <path d="M40,0 L80,23 L80,69 L40,92 L0,69 L0,23 Z" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-primary/30 dark:text-primary/20" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#hexagons)" />
@@ -61,7 +61,7 @@ const Volunteers = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-emerald-500 font-semibold text-sm uppercase tracking-widest"
+            className="text-primary font-semibold text-sm uppercase tracking-widest"
           >
             Volunteers
           </motion.span>
@@ -73,7 +73,7 @@ const Volunteers = () => {
             className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-3 mb-4"
           >
             8,400+ people who
-            <span className="text-emerald-500"> give their time</span>
+            <span className="text-primary"> give their time</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -103,7 +103,7 @@ const Volunteers = () => {
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.2, zIndex: 20 }}
-                className={`${sizes[i % sizes.length]} rounded-full overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
+                className={`${sizes[i % sizes.length]} rounded-lg overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
               >
                 <img src={face} alt="" className="w-full h-full object-cover" />
               </motion.div>
@@ -121,7 +121,7 @@ const Volunteers = () => {
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.2, zIndex: 20 }}
-                className={`${sizes[(i + 4) % sizes.length]} rounded-full overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
+                className={`${sizes[(i + 4) % sizes.length]} rounded-lg overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
               >
                 <img src={face} alt="" className="w-full h-full object-cover" />
               </motion.div>
@@ -139,7 +139,7 @@ const Volunteers = () => {
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.2, zIndex: 20 }}
-                className={`${sizes[(i + 8) % sizes.length]} rounded-full overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
+                className={`${sizes[(i + 8) % sizes.length]} rounded-lg overflow-hidden flex-shrink-0 border-2 border-white dark:border-gray-800 shadow-md cursor-pointer`}
               >
                 <img src={face} alt="" className="w-full h-full object-cover" />
               </motion.div>
@@ -161,7 +161,7 @@ const Volunteers = () => {
           </p>
           <Link
             to="/register"
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-full transition-all hover:shadow-lg hover:shadow-emerald-200 dark:hover:shadow-emerald-900"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-lg transition-all hover:shadow-lg hover:shadow-primary/20 dark:hover:shadow-primary/10"
           >
             Become a Volunteer <ArrowRight className="w-4 h-4" />
           </Link>

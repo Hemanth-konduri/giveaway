@@ -28,11 +28,11 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <Heart className="w-4 h-4 text-white" fill="white" />
           </div>
           <span className="text-xl font-bold text-gray-900 dark:text-white">
-            Give<span className="text-emerald-500">Wave</span>
+            Give<span className="text-primary">Wave</span>
           </span>
         </Link>
 
@@ -42,7 +42,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
             <a
               key={item}
               href={`#${item.toLowerCase().replace(/ /g, '-')}`}
-              className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+              className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
             >
               {item}
             </a>
@@ -66,7 +66,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
           </Link>
 
           <Link to="/register">
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full px-6">
+            <Button className="bg-primary hover:bg-primary/90 text-white font-medium rounded-lg px-6">
               Get Started
             </Button>
           </Link>
@@ -107,7 +107,7 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
               <Button variant="outline" className="w-full">Login</Button>
             </Link>
             <Link to="/register" className="flex-1">
-              <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
+              <Button className="w-full bg-primary hover:bg-primary/90 text-white">
                 Get Started
               </Button>
             </Link>

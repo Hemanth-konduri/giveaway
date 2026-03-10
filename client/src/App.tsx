@@ -13,6 +13,8 @@ import Register from './pages/Register'
 import { useState } from 'react'
 import VerifyOTP from './pages/VerifyOTP'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminLayout from './pages/admin/AdminLayout'
+import AdminOverview from './pages/admin/AdminOverview'
 
 const LandingPage = ({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMode: () => void }) => (
   <>
@@ -52,7 +54,9 @@ function App() {
 
 <Route path="/admin" element={
   <ProtectedRoute allowedRoles={['admin']}>
-    <div>Admin Dashboard — coming soon</div>
+    <AdminLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+      <AdminOverview />
+    </AdminLayout>
   </ProtectedRoute>
 } />
 

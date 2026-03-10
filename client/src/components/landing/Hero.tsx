@@ -1,268 +1,263 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Heart, Users, Target } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import { ArrowRight, Heart, Users, Target } from "lucide-react"
+import { Link } from "react-router-dom"
+import { Button } from "@/components/ui/button"
 
 const campaigns = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&q=80',
-    title: 'Clean Water for Villages',
-    location: 'Andhra Pradesh',
+    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&q=80",
+    title: "Clean Water for Villages",
+    location: "Andhra Pradesh",
     raised: 45000,
     goal: 80000,
-    category: '💧 Water'
+    category: "💧 Water",
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=500&q=80',
-    title: 'Education for Every Child',
-    location: 'Vijayawada',
+    image: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=500&q=80",
+    title: "Education for Every Child",
+    location: "Vijayawada",
     raised: 32000,
     goal: 50000,
-    category: '📚 Education'
+    category: "📚 Education",
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=500&q=80',
-    title: 'Medical Aid for Families',
-    location: 'Guntur',
+    image: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=500&q=80",
+    title: "Medical Aid for Families",
+    location: "Guntur",
     raised: 68000,
     goal: 100000,
-    category: '🏥 Medical'
+    category: "🏥 Medical",
+  },
+]
+
+
+const cardPositions = [
+  {
+    scale: 1,
+    y: 0,
+    x: 0,
+    rotate: -2,
+    zIndex: 30,
+    opacity: 1
   },
   {
-    id: 4,
-    image: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=500&q=80',
-    title: 'Plant 10,000 Trees',
-    location: 'Telangana',
-    raised: 21000,
-    goal: 40000,
-    category: '🌿 Environment'
+    scale: 0.9,
+    y: 30,
+    x: 30,
+    rotate: 3,
+    zIndex: 20,
+    opacity: 0.9
+  },
+  {
+    scale: 0.8,
+    y: 60,
+    x: 60,
+    rotate: 6,
+    zIndex: 10,
+    opacity: 0.7
   }
 ]
 
-const Hero = () => {
+export default function Hero() {
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % campaigns.length)
-    }, 3000)
+    }, 3500)
+
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <section className="min-h-screen flex items-center pt-20 pb-16 px-6 bg-white dark:bg-gray-950 relative overflow-hidden">
-      {/* Background design - Gradient circles */}
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-white">
+
+      {/* ===== Animated Gradient Background ===== */}
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-100 dark:bg-emerald-900/20 rounded-full blur-3xl opacity-40" />
-        <div className="absolute top-1/2 -left-32 w-64 h-64 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl opacity-30" />
+
+        <motion.div
+          animate={{ x: [0, 80, 0], y: [0, -40, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] bg-red-500/20 blur-[140px] rounded-full"
+        />
+
+        <motion.div
+          animate={{ x: [0, -60, 0], y: [0, 60, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-250px] right-[-200px] w-[700px] h-[700px] bg-pink-400/20 blur-[160px] rounded-full"
+        />
+
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 12, repeat: Infinity }}
+          className="absolute top-[30%] left-[40%] w-[400px] h-[400px] bg-orange-400/10 blur-[120px] rounded-full"
+        />
+
       </div>
-      <div className="relative z-10">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-        {/* Left Side — Text */}
-       {/* Left Side — Text */}
-<div className="space-y-8">
+      {/* ===== Content Container ===== */}
 
-  {/* Badge */}
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-    className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 px-4 py-2 rounded-full text-sm font-medium"
-  >
-    <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-    India's Problem Solving Network
-  </motion.div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
 
-  {/* Headline */}
-  <motion.h1
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.1 }}
-    className="text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight"
-  >
-    Every Problem
-    <br />
-    <span className="text-emerald-500 relative">
-      Deserves
-      <motion.span
-        initial={{ width: 0 }}
-        animate={{ width: '100%' }}
-        transition={{ duration: 0.8, delay: 0.7 }}
-        className="absolute bottom-1 left-0 h-1 bg-emerald-200 dark:bg-emerald-800 rounded-full -z-10"
-      />
-    </span>
-    {' '}a Solution
-  </motion.h1>
+        {/* ===== TEXT SECTION ===== */}
 
-  {/* Description */}
-  <motion.p
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.2 }}
-    className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed max-w-lg"
-  >
-    GiveWave connects real problems with real solutions — through donations, volunteers, resources and community support. Together we solve what no one can alone.
-  </motion.p>
+        <div className="space-y-8 text-center lg:text-left">
 
-  {/* Stats */}
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.3 }}
-    className="flex gap-8"
-  >
-    {[
-      { icon: Heart, label: 'Campaigns', value: '1,200+', color: 'text-rose-500' },
-      { icon: Users, label: 'Volunteers', value: '8,400+', color: 'text-blue-500' },
-      { icon: Target, label: 'Solved', value: '640+', color: 'text-emerald-500' }
-    ].map(({ icon: Icon, label, value, color }, i) => (
-      <motion.div
-        key={label}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-        whileHover={{ scale: 1.05 }}
-        className="flex flex-col"
-      >
-        <div className={`flex items-center gap-1 ${color} mb-1`}>
-          <Icon className="w-4 h-4" />
-          <span className="text-2xl font-bold text-gray-900 dark:text-white">{value}</span>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-medium"
+          >
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            India's Problem Solving Network
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
+          >
+            Every Problem
+            <br />
+
+            <span className="text-red-600 relative">
+              Deserves
+              <motion.span
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 0.8 }}
+                className="absolute bottom-1 left-0 h-1 bg-red-300 rounded-full"
+              />
+            </span>{" "}
+            a Solution
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-gray-600 max-w-xl mx-auto lg:mx-0"
+          >
+            GiveWave connects real problems with real solutions through
+            donations, volunteers and community action.
+          </motion.p>
+
+          {/* Stats */}
+
+          <div className="flex justify-center lg:justify-start gap-10">
+
+            {[
+              { icon: Heart, label: "Campaigns", value: "1,200+" },
+              { icon: Users, label: "Volunteers", value: "8,400+" },
+              { icon: Target, label: "Solved", value: "640+" },
+            ].map(({ icon: Icon, label, value }) => (
+              <div key={label}>
+                <div className="flex items-center gap-2 text-red-600">
+                  <Icon className="w-5 h-5" />
+                  <span className="text-2xl font-bold text-gray-900">
+                    {value}
+                  </span>
+                </div>
+                <p className="text-sm text-gray-500">{label}</p>
+              </div>
+            ))}
+
+          </div>
+
+          {/* Buttons */}
+
+          <div className="flex justify-center lg:justify-start gap-4 flex-wrap">
+
+            <Link to="/register">
+              <Button className="bg-red-600 hover:bg-red-700 text-white px-8 py-6 text-base">
+                Start a Campaign <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+
+            <Link to="/campaigns">
+              <Button variant="outline" className="px-8 py-6 text-base">
+                Browse Problems
+              </Button>
+            </Link>
+
+          </div>
+
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
-      </motion.div>
-    ))}
-  </motion.div>
 
-  {/* Floating activity cards */}
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6, delay: 0.5 }}
-    className="flex flex-col gap-3"
-  >
-    
-  </motion.div>
+        {/* ===== CAMPAIGN CARDS ===== */}
 
-  {/* CTA Buttons */}
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.8 }}
-    className="flex gap-4 flex-wrap"
-  >
-    <Link to="/register">
-      <Button className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full px-8 py-6 text-base font-semibold">
-        Start a Campaign <ArrowRight className="w-4 h-4 ml-2" />
-      </Button>
-    </Link>
-    <Link to="/campaigns">
-      <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold dark:border-gray-700 dark:text-white">
-        Browse Problems
-      </Button>
-    </Link>
-  </motion.div>
+        <div className="relative flex justify-center items-center h-[500px] order-2 lg:order-2">
 
-</div>
+  {campaigns.map((campaign, index) => {
 
-       {/* Right Side — Card Deck */}
-{/* Right Side — Card Deck */}
-<div className="relative flex justify-center items-center h-[500px]">
+    const position = (index - current + campaigns.length) % campaigns.length
 
-  {campaigns.map((campaign, i) => {
-    const offset = (i - current + campaigns.length) % campaigns.length
+    if (position > 2) return null
+
+    const style = cardPositions[position]
     const progressPercent = (campaign.raised / campaign.goal) * 100
 
     return (
       <motion.div
         key={campaign.id}
-        layout
-        animate={{
-          rotate: offset === 0 ? -2 : offset === 1 ? 3 : offset === 2 ? 7 : 10,
-          x: offset === 0 ? 0 : offset === 1 ? 16 : offset === 2 ? 30 : 44,
-          y: offset === 0 ? 0 : offset === 1 ? 16 : offset === 2 ? 30 : 44,
-          scale: offset === 0 ? 1 : offset === 1 ? 0.94 : offset === 2 ? 0.88 : 0.82,
-          zIndex: offset === 0 ? 30 : offset === 1 ? 20 : offset === 2 ? 10 : 0,
-          opacity: offset === 0 ? 1 : offset === 1 ? 0.9 : offset === 2 ? 0.75 : 0,
-        }}
+        animate={style}
         transition={{
           duration: 0.7,
-          ease: [0.32, 0.72, 0, 1],
-          layout: { duration: 0.7 }
+          ease: [0.32, 0.72, 0, 1]
         }}
-        className="absolute w-[340px] rounded-3xl overflow-hidden shadow-2xl cursor-pointer"
-        onClick={() => {
-          if (offset === 0) setCurrent((prev) => (prev + 1) % campaigns.length)
-        }}
+        className="absolute w-[340px] rounded-lg overflow-hidden shadow-2xl cursor-pointer"
+        onClick={() => setCurrent((prev) => (prev + 1) % campaigns.length)}
       >
+
         <div className="relative">
           <img
             src={campaign.image}
             alt={campaign.title}
             className="w-full h-[420px] object-cover"
           />
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-          <motion.div
-            animate={{ opacity: offset === 0 ? 1 : 0 }}
-            transition={{ duration: 0.4 }}
-            className="absolute bottom-0 left-0 right-0 p-6 text-white"
-          >
+          <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+
             <span className="text-xs font-semibold bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
               {campaign.category}
             </span>
+
             <h3 className="text-xl font-bold mt-3 mb-1">{campaign.title}</h3>
-            <p className="text-sm text-white/70 mb-3">📍 {campaign.location}</p>
+
+            <p className="text-sm text-white/70 mb-3">
+              📍 {campaign.location}
+            </p>
+
             <div className="w-full bg-white/20 rounded-full h-1.5 mb-2">
               <div
-                className="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
+                className="bg-primary h-1.5 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
+
             <div className="flex justify-between text-xs text-white/70">
               <span>₹{campaign.raised.toLocaleString()} raised</span>
               <span>{Math.round(progressPercent)}%</span>
             </div>
-          </motion.div>
+
+          </div>
         </div>
+
       </motion.div>
     )
   })}
 
-  {/* Click hint */}
-  <motion.p
-    animate={{ opacity: [0.5, 1, 0.5] }}
-    transition={{ duration: 2, repeat: Infinity }}
-    className="absolute -bottom-8 text-sm text-gray-400 dark:text-gray-500"
-  >
-    Click card to browse →
-  </motion.p>
-
-  {/* Dots */}
-  <div className="absolute -bottom-16 flex gap-2">
-    {campaigns.map((_, i) => (
-      <button
-        key={i}
-        onClick={() => setCurrent(i)}
-        className={`h-2 rounded-full transition-all duration-300 ${
-          i === current
-            ? 'bg-emerald-500 w-6'
-            : 'bg-gray-300 dark:bg-gray-600 w-2'
-        }`}
-      />
-    ))}
-  </div>
-
 </div>
 
-      </div>
       </div>
     </section>
   )
 }
-
-export default Hero
