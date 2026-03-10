@@ -108,7 +108,7 @@ const UserProfile = () => {
             { label: 'Total Donated', value: '₹12,500', icon: Heart },
             { label: 'Campaigns Supported', value: '8', icon: TrendingUp },
             { label: 'Volunteer Hours', value: '32 hrs', icon: Award },
-          ].map((stat, i) => (
+          ].map((stat) => (
             <div key={stat.label} className="bg-white border border-gray-100 rounded-2xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-gray-600 font-medium">{stat.label}</p>

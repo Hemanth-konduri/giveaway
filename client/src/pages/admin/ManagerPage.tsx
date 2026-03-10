@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, ReactNode } from 'react'
+import { useState, useEffect, useCallback, type ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Eye, CheckCircle, Clock, XCircle, MapPin, Building2, Mail, Phone, Plus, Edit, Trash2, ShieldOff, X, Loader2 } from 'lucide-react'
 import managersAPI from '../../services/managersService'

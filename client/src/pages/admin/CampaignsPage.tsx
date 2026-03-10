@@ -4,7 +4,7 @@ import {
   Search, Plus, Eye, Edit, Trash2, X, Loader2,
   CheckCircle, Clock, XCircle, PauseCircle, Trophy,
   MapPin, Target, Users, TrendingUp, AlertCircle,
-  Star, Calendar, Building2, ChevronRight
+  Star, Calendar, Building2
 } from 'lucide-react'
 import campaignAPI from '../../services/campaignService'
 
@@ -59,7 +59,7 @@ interface Stats {
 const CATEGORIES = ['Education', 'Healthcare', 'Environment', 'Poverty', 'Disaster Relief', 'Animal Welfare', 'Other']
 const STATUSES = ['all', 'approved', 'pending', 'rejected', 'completed', 'paused']
 
-const statusConfig: Record<string, { color: string; icon: JSX.Element; label: string }> = {
+const statusConfig: Record<string, { color: string; icon: React.ReactNode; label: string }> = {
   approved: { color: 'bg-emerald-500/15 text-emerald-500', icon: <CheckCircle className="w-3.5 h-3.5" />, label: 'Approved' },
   pending: { color: 'bg-yellow-500/15 text-yellow-500', icon: <Clock className="w-3.5 h-3.5" />, label: 'Pending' },
   rejected: { color: 'bg-red-500/15 text-red-500', icon: <XCircle className="w-3.5 h-3.5" />, label: 'Rejected' },
