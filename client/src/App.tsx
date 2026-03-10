@@ -15,6 +15,11 @@ import VerifyOTP from './pages/VerifyOTP'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminOverview from './pages/admin/AdminOverview'
+import ManagersPage from './pages/admin/ManagerPage'
+import UserDashboard from './pages/user/Dashboard'
+import UserCampaigns from './pages/user/Campaigns'
+import UserProfile from './pages/user/Profile'
+import CampaignsPage from './pages/admin/CampaignsPage'
 
 const LandingPage = ({ darkMode, toggleDarkMode }: { darkMode: boolean, toggleDarkMode: () => void }) => (
   <>
@@ -44,27 +49,54 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
           <Route path="/register" element={<Register />} />
-         <Route path="/verify-otp" element={<VerifyOTP />} />
-         <Route path="/login" element={<Login />} />
-         <Route path="/dashboard" element={
-  <ProtectedRoute>
-    <div>User Dashboard — coming soon</div>
-  </ProtectedRoute>
-} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/login" element={<Login />} />
+          
+          <Route path="/user/dashboard" element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/user/campaigns" element={
+            <ProtectedRoute>
+              <UserCampaigns />
+            </ProtectedRoute>
+          } />
+          <Route path="/user/profile" element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          } />
 
-<Route path="/admin" element={
+          <Route path="/admin" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+                <AdminOverview />
+              </AdminLayout>
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/managers" element={
   <ProtectedRoute allowedRoles={['admin']}>
     <AdminLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
-      <AdminOverview />
+      <ManagersPage />
     </AdminLayout>
   </ProtectedRoute>
 } />
 
-<Route path="/manager" element={
-  <ProtectedRoute allowedRoles={['admin', 'manager']}>
-    <div>Manager Dashboard — coming soon</div>
+<Route path="/admin/campaigns" element={
+  <ProtectedRoute allowedRoles={['admin']}>
+    <AdminLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+      <CampaignsPage />
+    </AdminLayout>
   </ProtectedRoute>
 } />
+
+          <Route path="/manager" element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <div>Manager Dashboard — coming soon</div>
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
     </div>

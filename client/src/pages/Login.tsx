@@ -32,7 +32,7 @@ const Login = () => {
       login(response.user, response.token)
       if (response.user.role === 'admin') navigate('/admin')
       else if (response.user.role === 'manager') navigate('/manager')
-      else navigate('/dashboard')
+      else navigate('/user/dashboard')
     } catch (err: any) {
       setError(err.response?.data?.message || 'Something went wrong')
     } finally {

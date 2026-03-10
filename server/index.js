@@ -3,6 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const managerRoutes = require('./routes/managerRoutes');
+const campaignRoutes = require('./routes/campaignRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 
@@ -10,15 +13,10 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// app.use(cors({
-//   origin: [
-//     'https://giveaway-mocha-rho.vercel.app',
-//     'http://localhost:5173',  // React dev server
-//   ],
-//   credentials: true
-// }));
-
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -27,7 +25,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes)
+app.use('/api/admin', adminRoutes);
+app.use('/api/managers', managerRoutes);
+app.use('/api/campaigns', campaignRoutes);
+app.use('/api/user', userRoutes)
 
 if (process.env.DATABASE_URL) {
   const pool = require('./config/db');
