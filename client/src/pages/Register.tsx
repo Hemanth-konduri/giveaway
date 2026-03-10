@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, Heart, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Heart, Loader2, ArrowRight, Check } from 'lucide-react'
 import { registerUser } from '../services/authService'
 
 interface RegisterForm {
@@ -34,7 +34,6 @@ const Register = () => {
         email: data.email,
         password: data.password
       })
-      // Save userId for OTP page
       localStorage.setItem('pendingUserId', response.userId)
       localStorage.setItem('pendingEmail', data.email)
       navigate('/verify-otp')
@@ -45,61 +44,91 @@ const Register = () => {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
+  const password = watch('password')
 
-      {/* Left — Form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12">
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col">
+      {/* Background design */}
+      <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20">
+        <svg className="w-full h-full" preserveAspectRatio="none">
+          <defs>
+            <pattern id="grid-register" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgb(255, 255, 255)" strokeWidth="1" opacity="0.1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-register)" />
+        </svg>
+      </div>
+
+      {/* Header */}
+      <div className="relative z-10 border-b border-gray-100 dark:border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Heart className="w-4 h-4 text-white" fill="white" />
+            </div>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">
+              Give<span className="text-primary">Wave</span>
+            </span>
+          </Link>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{' '}
+            <Link to="/login" className="text-primary font-semibold hover:underline">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-6 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-              <Heart className="w-4 h-4 text-white" fill="white" />
-            </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Give<span className="text-emerald-500">Wave</span>
-            </span>
-          </Link>
-
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Create your account
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-8">
-            Join thousands of people solving real problems across India.
-          </p>
+          {/* Heading */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Create your account
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              Join thousands making a real difference across India
+            </p>
+          </div>
 
           {/* Error */}
           {error && (
-            <div className="bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 text-sm px-4 py-3 rounded-xl mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 text-sm px-4 py-3 rounded-lg mb-6"
+            >
               {error}
-            </div>
+            </motion.div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-
+          {/* Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Full Name */}
             <div>
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
                 Full Name
               </label>
               <input
                 {...register('full_name', { required: 'Full name is required' })}
-                placeholder="Hemanth Konduri"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                placeholder="Your full name"
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
               {errors.full_name && (
-                <p className="text-rose-500 text-xs mt-1">{errors.full_name.message}</p>
+                <p className="text-rose-500 text-xs mt-1.5">{errors.full_name.message}</p>
               )}
             </div>
 
             {/* Email */}
             <div>
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
                 Email Address
               </label>
               <input
@@ -107,17 +136,17 @@ const Register = () => {
                   required: 'Email is required',
                   pattern: { value: /^\S+@\S+$/i, message: 'Invalid email' }
                 })}
-                placeholder="hemanth@gmail.com"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                placeholder="you@example.com"
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
               {errors.email && (
-                <p className="text-rose-500 text-xs mt-1">{errors.email.message}</p>
+                <p className="text-rose-500 text-xs mt-1.5">{errors.email.message}</p>
               )}
             </div>
 
             {/* Password */}
             <div>
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
                 Password
               </label>
               <div className="relative">
@@ -127,38 +156,38 @@ const Register = () => {
                     minLength: { value: 6, message: 'Minimum 6 characters' }
                   })}
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Min. 6 characters"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all pr-12"
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-rose-500 text-xs mt-1">{errors.password.message}</p>
+                <p className="text-rose-500 text-xs mt-1.5">{errors.password.message}</p>
               )}
             </div>
 
             {/* Confirm Password */}
             <div>
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 block">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
                 Confirm Password
               </label>
               <input
                 {...register('confirm_password', {
                   required: 'Please confirm your password',
-                  validate: (val) => val === watch('password') || 'Passwords do not match'
+                  validate: (val) => val === password || 'Passwords do not match'
                 })}
                 type="password"
-                placeholder="Repeat your password"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                placeholder="••••••••"
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
               {errors.confirm_password && (
-                <p className="text-rose-500 text-xs mt-1">{errors.confirm_password.message}</p>
+                <p className="text-rose-500 text-xs mt-1.5">{errors.confirm_password.message}</p>
               )}
             </div>
 
@@ -166,102 +195,56 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 text-white font-semibold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full bg-primary hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition-all flex items-center justify-center gap-2 mt-6"
             >
-              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                <>
+                  Create account
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
-
           </form>
 
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
-            Already have an account?{' '}
-            <Link to="/login" className="text-emerald-500 font-semibold hover:underline">
-              Login
-            </Link>
-          </p>
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200 dark:border-gray-700" />
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="px-2 bg-white dark:bg-gray-950 text-gray-500">or</span>
+            </div>
+          </div>
 
+          {/* Benefits */}
+          <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              <span>Donate to verified campaigns</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              <span>Post problems & get help</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-primary flex-shrink-0" />
+              <span>Join as a volunteer</span>
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Right — Image */}
-     {/* Right — Visual */}
-<div className="hidden lg:flex flex-1 relative bg-gray-950 overflow-hidden">
-
-  {/* Background image */}
-  <img
-    src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&q=80"
-    alt="Community"
-    className="w-full h-full object-cover opacity-40"
-  />
-
-  {/* Content overlay */}
-  <div className="absolute inset-0 flex flex-col justify-between p-12">
-
-    {/* Top — Logo watermark */}
-    <div className="flex items-center gap-2">
-      <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-        <Heart className="w-4 h-4 text-white" fill="white" />
+      {/* Footer */}
+      <div className="relative z-10 border-t border-gray-100 dark:border-gray-800 py-6 px-6">
+        <div className="max-w-7xl mx-auto text-center text-xs text-gray-500 dark:text-gray-400">
+          <p>By creating an account, you agree to our <Link to="#" className="text-primary hover:underline">Terms of Service</Link> and <Link to="#" className="text-primary hover:underline">Privacy Policy</Link></p>
+        </div>
       </div>
-      <span className="text-white font-bold text-lg">
-        Give<span className="text-emerald-400">Wave</span>
-      </span>
-    </div>
-
-    {/* Middle — Main text */}
-    <div>
-      <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
-        <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-        India's Problem Solving Network
-      </div>
-      <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
-        Every problem <br />deserves a <br />
-        <span className="text-emerald-400">solution</span>
-      </h2>
-      <p className="text-gray-400 text-base leading-relaxed max-w-sm">
-        Join thousands of donors, volunteers and changemakers solving real problems across India every day.
-      </p>
-    </div>
-
-    {/* Bottom — Floating stat cards */}
-    <div className="flex flex-col gap-4">
-
-      {/* Stats row */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { value: '1,200+', label: 'Campaigns' },
-          { value: '92K+', label: 'Lives Helped' },
-          { value: '640+', label: 'Solved' },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-4 text-center"
-          >
-            <p className="text-emerald-400 font-bold text-xl">{stat.value}</p>
-            <p className="text-gray-400 text-xs mt-1">{stat.label}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent activity */}
-      {/* Recent activity */}
-<div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-4 flex flex-col gap-3">
-  {[
-    { color: 'bg-emerald-400', text: 'Rahul donated ₹500 to Clean Water project' },
-    { color: 'bg-blue-400', text: 'Priya joined as volunteer in Vijayawada' },
-    { color: 'bg-amber-400', text: 'School benches campaign fully funded!' },
-  ].map((item, i) => (
-    <div key={i} className="flex items-center gap-3">
-      <span className={`w-2 h-2 rounded-full shrink-0 ${item.color}`} />
-      <p className="text-gray-300 text-xs">{item.text}</p>
-    </div>
-  ))}
-</div>
-
-    </div>
-  </div>
-</div>
-
     </div>
   )
 }

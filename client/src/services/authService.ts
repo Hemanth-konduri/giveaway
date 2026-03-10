@@ -24,3 +24,25 @@ export const loginUser = async (data: {
   const response = await api.post('/api/auth/login', data)
   return response.data
 }
+
+
+export const getAdminStats = async () => {
+  const response = await api.get('/api/admin/stats')
+  return response.data
+}
+
+export const getRecentUsers = async () => {
+  const response = await api.get('/api/admin/recent-users')
+  return response.data
+}
+
+
+export const getUserGrowth = async () => {
+  const response = await api.get('/api/admin/user-growth')
+  return response.data
+}
+
+export const getRoleBreakdown = async () => {
+  const response = await api.get('/api/admin/role-breakdown')
+  return response.data
+}

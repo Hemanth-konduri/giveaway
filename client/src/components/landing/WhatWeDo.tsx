@@ -48,13 +48,13 @@ const WhatWeDo = () => {
   const trackRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section id="what-we-do" className="py-24 bg-gray-50 dark:bg-gray-900 overflow-hidden relative">
+    <section id="what-we-do" className="py-24 bg-gray-50 overflow-hidden relative">
       {/* Background design - Diagonal stripes */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
         <svg className="w-full h-full" preserveAspectRatio="none">
           <defs>
             <pattern id="diagonals" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="100" stroke="currentColor" strokeWidth="2" className="text-emerald-200 dark:text-emerald-800" />
+              <line x1="0" y1="0" x2="0" y2="100" stroke="rgb(239, 68, 68)" strokeWidth="2" opacity="0.3" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#diagonals)" />
@@ -70,7 +70,7 @@ const WhatWeDo = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-emerald-500 font-semibold text-sm uppercase tracking-widest"
+              className="text-primary font-semibold text-sm uppercase tracking-widest"
             >
               What We Do
             </motion.span>
@@ -79,10 +79,10 @@ const WhatWeDo = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-2"
+              className="text-4xl lg:text-5xl font-bold text-gray-900 mt-2"
             >
               We solve problems <br />
-              <span className="text-emerald-500">together</span>
+              <span className="text-primary">together</span>
             </motion.h2>
           </div>
           <motion.p
@@ -90,7 +90,7 @@ const WhatWeDo = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-500 dark:text-gray-400 max-w-md text-base leading-relaxed"
+            className="text-gray-500 max-w-md text-base leading-relaxed"
           >
             From clean water to education, medical emergencies to disaster relief — GiveWave connects every problem with the right solution.
           </motion.p>
@@ -101,9 +101,9 @@ const WhatWeDo = () => {
       <div className="relative">
 
         {/* Left fade */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
         {/* Right fade */}
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
 
         <motion.div
           ref={trackRef}
@@ -121,7 +121,7 @@ const WhatWeDo = () => {
           {[...images, ...images].map((item, i) => (
             <motion.div
               key={i}
-              className="relative w-72 h-96 rounded-3xl overflow-hidden flex-shrink-0 cursor-pointer group"
+              className="relative w-72 h-96 rounded-lg overflow-hidden flex-shrink-0 cursor-pointer group"
               whileHover={{ scale: 1.03, y: -8 }}
               transition={{ duration: 0.3 }}
             >
@@ -133,16 +133,33 @@ const WhatWeDo = () => {
               />
 
               {/* Default overlay — title only */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent transition-opacity duration-300 group-hover:opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-40" />
               <div className="absolute bottom-0 left-0 right-0 p-5 transition-opacity duration-300 group-hover:opacity-0">
                 <h3 className="text-white text-xl font-bold">{item.title}</h3>
               </div>
 
-              {/* Hover overlay — full description */}
-              <div className="absolute inset-0 bg-emerald-600/90 flex flex-col justify-center items-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <h3 className="text-white text-2xl font-bold mb-3">{item.title}</h3>
-                <p className="text-emerald-50 text-sm leading-relaxed">{item.description}</p>
-              </div>
+             {/* Hover overlay */}
+<div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-400">
+
+  {/* Glass background */}
+  <div className="absolute inset-0 bg-black/55 backdrop-blur-sm transition-all duration-400" />
+
+  <motion.div
+    initial={{ y: 20, opacity: 0 }}
+    whileHover={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.3 }}
+    className="relative z-10"
+  >
+    <h3 className="text-white text-xl font-bold mb-2">
+      {item.title}
+    </h3>
+
+    <p className="text-white/80 text-sm leading-relaxed">
+      {item.description}
+    </p>
+  </motion.div>
+
+</div>
             </motion.div>
           ))}
         </motion.div>
